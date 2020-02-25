@@ -16,11 +16,11 @@ with plans to support SignatureAnalyzer.
 Internally, tidysig converts SigProfiler outputs to a tidy data format with four variables for SBS96
 signatures and six variables for ID83 signatures.
 
-SBS96 Columns:
-Signature:
-Context:
-Change:
-Amount:
+*SBS96 Columns:*
+| *Column Name* | Signature | Change | Context | Amount |
+|---------------|-------------------------------------|---------------------------------------|:-----------------------------------------:|--------------------------------------------------------|
+| *Description* | The name of the signature or sample | The genomic change (i.e., T>N or C>N) | The trinucleotide context of the variant. | The amount, either as a raw counts or as a proportion. |
+
 
 ## Usage
 
