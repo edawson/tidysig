@@ -22,6 +22,11 @@ signatures and six variables for ID83 signatures.
 | *Description* | The name of the signature or sample | The genomic change (i.e., T>N or C>N) | The trinucleotide context of the variant. | The amount, either as a raw counts or as a proportion. |
 
 
+*ID83 Features*  
+| *Column Name* | Signature | Type | Length | Motif | Motif Length |
+|---------------|-------------------------------------|------------------------------------|:---------------------------------------:|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------|
+| *Description* | The name of the signature or sample | INS or DEL (insertion or deletion) | The length of the insertion or deletion | The motif surrounding the variant (i.e., within a C/T homopolymer, within a repeat, within microhomology)  | The length of the motif (in basepairs or repeat units) |
+
 ## Usage
 
 Load a SigProfilerExtractor file as input and plot all signatures:  
