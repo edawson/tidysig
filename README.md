@@ -23,10 +23,9 @@ signatures and six variables for ID83 signatures.
 
 
 *ID83 Features*  
-| *Column Name* | Signature | Type | Length | Motif | Motif Length |
-|---------------|-------------------------------------|------------------------------------|:---------------------------------------:|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------|
-| *Description* | The name of the signature or sample | INS or DEL (insertion or deletion) | The length of the insertion or deletion | The motif surrounding the variant (i.e., within a C/T homopolymer, within a repeat, within microhomology)  | The length of the motif (in basepairs or repeat units) |
-
+| *Column Name* | Signature | Type | Length | Motif | Motif Length | Amount |
+|---------------|-------------------------------------|------------------------------------|:---------------------------------------:|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------|--------------------------------------------------------|
+| *Description* | The name of the signature or sample | INS or DEL (insertion or deletion) | The length of the insertion or deletion | The motif surrounding the variant (i.e., within a C/T homopolymer, within a repeat, within microhomology)  | The length of the motif (in basepairs or repeat units) | The amount, either as a raw counts or as a proportion. |
 ## Usage
 
 Load a SigProfilerExtractor file as input and plot all signatures:  
