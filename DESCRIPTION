@@ -1,0 +1,26 @@
+Package: tidysig
+Title: Plot mutational signatures using ggplot objects.
+Version: 0.0.0.1
+Authors@R: 
+    person(given = "Eric",
+           family = "Dawson",
+           role = c("aut", "cre"),
+           email = "eric.t.dawson@gmail.com",
+           comment = c(ORCID = "0000-0001-5448-1653"))
+Description: tidysig is a tidyverse-style package for plotting mutational signatures
+    and mutation activity in SBS/ID mutational contexts. It utilizes a tidy data format and
+    provides functions for converting the outputs of common mutational signature analysis
+    packages to this format.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Imports:
+    dplyr,
+    ggplot2,
+    cowplot,
+    readr,
+    lazyeval,
+    scales,
+    reshape2,
+    magrittr
+RoxygenNote: 6.1.1
