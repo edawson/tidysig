@@ -72,3 +72,12 @@ tidy_sigprof_id83_probabilities <- function(x){
   return (x)
 }
 
+#' @export
+tidy_sigprof_sbs96_activities <- function(x){
+  x <- x %>%
+    rename(Sample = Samples) %>%
+    melt(id.vars = c("Sample")) %>%
+    rename(Signature = variable, Amount = value)
+  return (x)
+}
+
