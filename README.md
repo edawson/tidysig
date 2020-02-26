@@ -12,7 +12,7 @@ be modified with standard ggplot2 layers.
 tidysig is currently compatible with SigProfilerExtractor (as of version 1.0.3),
 with plans to support SignatureAnalyzer.
 
-**Nota bene:**: There is a known incompatibility with some SigProfilerExtractor outputs,
+**Nota bene:** There is a known incompatibility with some SigProfilerExtractor outputs,
 which have a first column titled "MutationsType" instead of "MutationType."
 
 This can be remedied with the following dplyr::rename call after reading in the file:
@@ -75,6 +75,23 @@ save_plot("all_sigs.pdf", all_sig_plot ,base_height = 10, base_width = 12)
 
 ## For single signatures, you can use the save_signature_plot function
 save_signature_plot(sig_96A_plot, "sig_96A_plot.pdf")
+```
+
+You can layer on standard ggplot2 layers. Here's a silly example
+where we remove sample names and change the theme to theme\_bw():
+```R
+activ <- tidy_sigprof_sbs96_activities(
+    read_tsv("sigprofiler_results/SBS96/Suggested_Solution/De_Novo_Solution/De_Novo_Solution_Activities_SBS96.txt")
+)
+
+plot_SBS96_activity(activ %>%
+       group_by(Sample) %>%
+       mutate(high = ifelse(sum(Amount) > 1000, "High", "Low")),
+    countsAsProportions = F,
+    showSampleNames = T,
+    facetGroupVariable = "high") +
+theme(axis.text.x = element_blank()) +
+theme_bw()
 ```
 
 ## Citing the R package
