@@ -53,7 +53,7 @@ all_sig_plot <- plot_SBS96_signature(df)
 ```
 <object data="https://github.com/edawson/tidysig/blob/master/images/sbs96_example_plot.pdf" type="application/pdf" width="700px" height="700px">
     <embed src="https://github.com/edawson/tidysig/blob/master/images/sbs96_example_plot.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="https://github.com/edawson/tidysig/blob/master/images/sbs96_example_plot.pdf">Download PDF</a>.</p>
+        <p>Please download the PDF to view SBS96 plot: <a href="https://github.com/edawson/tidysig/blob/master/images/sbs96_example_plot.pdf">Download PDF</a>.</p>
     </embed>
 </object>
 
