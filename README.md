@@ -12,6 +12,18 @@ be modified with standard ggplot2 layers.
 tidysig is currently compatible with SigProfilerExtractor (as of version 1.0.3),
 with plans to support SignatureAnalyzer.
 
+**Nota bene:**: There is a known incompatibility with some SigProfilerExtractor outputs,
+which have a first column titled "MutationsType" instead of "MutationType."
+
+This can be remedied with the following dplyr::rename call after reading in the file:
+```
+sigprofiler_results <- read_tsv("sigprofiler_results/SBS96/Suggested_Solution/De_Novo_Solution/De_Novo_Solution_Signatures_SBS96.txt")
+
+
+sigprofiler_results <- sigprofiler_results %>%
+  rename(MutationType=MutationsType)
+```
+
 ## Tidy signature represenation
 Internally, tidysig converts SigProfiler outputs to a tidy data format with four variables for SBS96
 signatures and six variables for ID83 signatures.
