@@ -41,7 +41,7 @@ signatures and six variables for ID83 signatures.
 ## Usage
 
 Load a SigProfilerExtractor file as input and plot all signatures:  
-```
+```R
 library(tidysig)
 library(readr)
 
@@ -50,7 +50,17 @@ sigprofiler_results <- read_tsv("sigprofiler_results/SBS96/Suggested_Solution/De
 df <- tidy_sigprof_SBS96_df(sigprofiler_results)
 
 all_sig_plot <- plot_SBS96_signature(df)
+```
+<object data="https://github.com/edawson/tidysig/blob/master/images/sbs96_example_plot.pdf" type="application/pdf" width="700px" height="700px">
+    <embed src="http://yoursite.com/the.pdf">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://yoursite.com/the.pdf">Download PDF</a>.</p>
+    </embed>
+</object>
 
+
+In addition, the resulting plots can be modified:
+
+```R
 ## Counts can be normalized to proportions using the countsAsProportions argument
 all_sig_plot_proportions <- plot_SBS96_signature(df, countsAsProportions=TRUE)
 
