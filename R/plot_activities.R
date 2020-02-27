@@ -1,5 +1,37 @@
+
 #' @export
-plot_activities <- function(x,
+signature_activity_figure <- function(x,
+                            legendPosition = "bottom",
+                            countYlim = NULL,
+                            propYlim = NULL){
+  countPlot <- plot_signature_activities(x) + theme(legend.position = legendPosition)
+  propPlot <- plot_signature_activities(x, countsAsProportions = TRUE)
+  legend <- cowplot::get_legend(countPlot)
+  countPlot <- countPlot + theme(legend.position = "none")
+  propPlot <- propPlot + theme(legend.position = "none")
+  figure <- NULL
+  if (legendPosition == "bottom"){
+    figure <- plot_grid(countPlot, propPlot, legend,
+                      ncol=1, nrow=3,
+                      rel_heights = c(1,1,0.25),
+                      labels = c("A", "B"),
+                      align = "hv",axis = "lt")
+  }
+  else if (legendPosition == "right"){
+    figure <- plot_grid(
+      plot_grid(countPlot, propPlot,
+                nrow = 2, ncol=1,
+                align = "hv", axis = "tblr",
+                labels = c("A", "B")),
+      legend, ncol=2, nrow = 1, rel_widths = c(1,0.25), align = "r"
+    )
+
+  }
+  return(figure)
+}
+
+#' @export
+plot_signature_activities <- function(x,
                                 title = NULL,
                                 xlabel = "Samples",
                                 ylabel = "Mutation Counts",
