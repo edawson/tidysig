@@ -8,6 +8,14 @@ tidysig is an R package for plotting mutational signatures / mutational contexts
 the tidyverse style. It produces ggplot2 plots of SBS96 and ID83 features which can then
 be modified with standard ggplot2 layers.
 
+## Installation
+
+tidysig can be installed with devtools:  
+```
+library(devtools)
+devtools::install_github("edawson/tidysig")
+```
+
 ## Compatibility
 tidysig is currently compatible with SigProfilerExtractor (as of version 1.0.3),
 with plans to support SignatureAnalyzer.
