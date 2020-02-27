@@ -34,6 +34,7 @@ plot_SBS96_activity <- function(x,
                                 usePercent = FALSE,
                                 countsAsProportions=FALSE,
                                 showSampleNames = FALSE,
+                                orderByMutationCount = TRUE,
                                 facetGroupVariable = NULL){
 
   ## Calculate the total number of mutations
@@ -42,13 +43,18 @@ plot_SBS96_activity <- function(x,
     ungroup() %>%
     group_by(Sample) %>%
     mutate(totalForOrder = sum(Amount))
-  if (countsAsProportions){
-    x <- normalize_sample_counts(x)
-  }
+    if (countsAsProportions){
+        x <- normalize_sample_counts(x)
+    }
   
-  p <- ggplot(x) +
-    geom_bar(aes(x = reorder(Sample, -totalForOrder), y = Amount, fill = Signature), stat = "identity", width = 0.99) +
-    theme_minimal_hgrid(14) +
+    p <- ggplot(x)
+    if (orderByMutationCount){
+        p <- p + geom_bar(aes(x = reorder(Sample, -totalForOrder), y = Amount, fill = Signature), stat = "identity", width = 0.99)
+    }
+    else{
+        p <- p + geom_bar(aes(x = Sample, y = Amount, fill = Signature), stat = "identity", width = 0.99)
+    }
+    p <- p + theme_minimal_hgrid(14) +
     labs(x = xlabel, y = ylabel) +
     coord_cartesian(expand=F)
   
