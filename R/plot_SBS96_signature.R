@@ -47,7 +47,7 @@ plot_SBS96_activity <- function(x,
   }
   
   p <- ggplot(x) +
-    geom_bar(aes(x = reorder(Sample, -totalForOrder), y = Amount, fill = Signature), stat = "identity", width = 1) +
+    geom_bar(aes(x = reorder(Sample, -totalForOrder), y = Amount, fill = Signature), stat = "identity", width = 0.99) +
     theme_minimal_hgrid(14) +
     labs(x = xlabel, y = ylabel) +
     coord_cartesian(expand=F)
