@@ -24,7 +24,7 @@ sigprofiler_results <- sigprofiler_results %>%
   rename(MutationType=MutationsType)
 ```
 
-## Tidy signature represenation
+## Tidy signature representation
 Internally, tidysig converts SigProfiler outputs to a tidy data format with four variables for SBS96
 signatures and six variables for ID83 signatures.
 

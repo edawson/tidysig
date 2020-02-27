@@ -64,7 +64,7 @@ plot_SBS96_activity <- function(x,
 #' @export
 plot_SBS96_signature <- function(x,
                                  label = "Signature",
-                                 title = "",
+                                 title = NULL,
                                  xlabel = "Base Context",
                                  ylabel = "Count",
                                  ylimits=NULL,
@@ -86,6 +86,10 @@ plot_SBS96_signature <- function(x,
     scale_fill_manual(values = sbs_96_changes_colors, aesthetics = "fill") +
     labs(x = xlabel, y = ylabel) +
     guides(fill = FALSE)
+  
+  if (!is.null(title)){
+    p <- p + ggtitle(title)
+  }
   
   if (usePercent & !is.null(ylimits)){
     p <- p + scale_y_continuous(labels = scales::percent, limits = ylimits) + labs(y="Proportion")
