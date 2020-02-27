@@ -22,5 +22,7 @@ Imports:
     lazyeval,
     scales,
     reshape2,
-    magrittr
+    magrittr,
+    ggsci,
+    purrr
 RoxygenNote: 7.0.2
