@@ -1,3 +1,29 @@
+sbs_96_contexts <- c("ACA","ACC","ACG","ACT","ACA","ACC",
+                     "ACG","ACT", "ACA","ACC","ACG","ACT",
+                     "ATA","ATC","ATG","ATT","ATA","ATC",
+                     "ATG","ATT","ATA","ATC","ATG","ATT",
+                     "CCA","CCC","CCG","CCT","CCA","CCC",
+                     "CCG","CCT","CCA","CCC","CCG","CCT",
+                     "CTA","CTC","CTG","CTT","CTA","CTC",
+                     "CTG","CTT","CTA","CTC","CTG","CTT",
+                     "GCA","GCC","GCG","GCT","GCA","GCC",
+                     "GCG","GCT","GCA","GCC","GCG","GCT",
+                     "GTA","GTC","GTG","GTT","GTA","GTC",
+                     "GTG","GTT","GTA","GTC","GTG","GTT",
+                     "TCA","TCC","TCG","TCT","TCA","TCC",
+                     "TCG","TCT","TCA","TCC","TCG","TCT",
+                     "TTA","TTC","TTG","TTT","TTA","TTC",
+                     "TTG","TTT","TTA","TTC","TTG","TTT")
+sbs_96_changes <- c("C>A","C>G","C>T",
+                    "T>A","T>C","T>G")
+
+sbs_96_changes_colors <- c(rgb(3/256,189/256,239/256),
+                           rgb(1/256,1/256,1/256),
+                           rgb(228/256,41/256,38/256),
+                           rgb(203/256,202/256,202/256),
+                           rgb(162/256,207/256,99/256),
+                           rgb(236/256,199/256,197/256))
+
 
 #' @export
 plot_SBS96_activity <- function(x,
