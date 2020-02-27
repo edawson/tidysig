@@ -35,7 +35,9 @@ plot_SBS96_activity <- function(x,
                                 countsAsProportions=FALSE,
                                 showSampleNames = FALSE,
                                 facetGroupVariable = NULL){
-  
+
+  ## Calculate the total number of mutations
+  ## so that we can order plots on that.
   x <- x %>%
     ungroup() %>%
     group_by(Sample) %>%
@@ -44,9 +46,6 @@ plot_SBS96_activity <- function(x,
     x <- normalize_sample_counts(x)
   }
   
-  ## Calculate the total number of mutations
-  ## so that we can order plots on that.
-
   p <- ggplot(x) +
     geom_bar(aes(x = reorder(Sample, -totalForOrder), y = Amount, fill = Signature), stat = "identity") +
     theme_minimal_hgrid(14) +
