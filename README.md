@@ -8,6 +8,14 @@ tidysig is an R package for plotting mutational signatures / mutational contexts
 the tidyverse style. It produces ggplot2 plots of SBS96 and ID83 features which can then
 be modified with standard ggplot2 layers.
 
+## Installation
+
+tidysig can be installed with devtools:  
+```
+library(devtools)
+devtools::install_github("edawson/tidysig")
+```
+
 ## Compatibility
 tidysig is currently compatible with SigProfilerExtractor (as of version 1.0.3),
 with plans to support SignatureAnalyzer.
@@ -93,6 +101,65 @@ plot_SBS96_activity(activ %>%
 theme(axis.text.x = element_blank()) +
 theme_bw()
 ```
+
+## Prerequisites
+You'll need to run SigProfiler to generate the inputs for tidysig.
+SigProfiler can be installed with PIP. Note, I've frozen on specific
+versions - check pip for the latest ones if you want to try them.
+
+```bash
+## if on a compute cluster, run:
+## module load python
+
+## Install SigProfiler to user directory using pip:
+pip install --user SigProfilerExtractor==1.0.3
+
+## Install SigProfilerMatrixGenerator:
+pip install --user SigProfilerMatrixGenerator==1.1.0
+```
+
+The SigProfilerHelper utilities can be used to run SigProfiler from the command
+line, rather than running it in a python REPL:
+```bash
+git clone https://github.com/edawson/SigProfilerHelper sigprofilerhelper
+```
+
+You need to first install a reference genome, such as GRCh37 (hg19):
+```bash
+python sigprofilerhelper/install_reference.py -g GRCh37
+```
+
+You can then generate a mutational counts file:
+```bash
+python sigprofilerhelper/generate_matrix -m <maf_file>
+```
+
+This will produce a directory (default name: sigprof\_input) which contains 
+the inputs for SigProfilerExtractor. Another helper script can take this as
+input and produce mutational signatures:
+```bash
+## Run SigProfilerExtractor for an SBS96 counts matrix,
+## for 1 to 7 signatures,
+## using 16 cores and 1000 iterations
+python sigprofilerhelper/run_sigrofiler.py -t sigprof_input/output/SBS/PROJECT.SBS96.all -s 1 -e 7 -i 1000 -c 16
+```
+
+If you're on Biowulf (or another cluster using SLURM, you can write the following wrapper script:
+```bash
+#!/bin/bash
+module load python
+
+python sigprofilerhelper/run_sigrofiler.py -t sigprof_input/output/SBS/PROJECT.SBS96.all -s 1 -e 7 -i 1000 -c ${SLURM_CPUS_PER_TASK}
+```
+
+Save this file (as an example, to "run\_sigpro.sh")
+and submit it to a queue like so:
+```bash
+sbatch --cpus-per-task=16 --mem=20g --error=sigpro.err.txt --ouput=sigpro.out.txt run_sigpro.sh
+```
+
+In a few hours (usually 3-5), you'll get output in a directory called sigpro\_results, which
+will contain the inputs for tidysig.
 
 ## Citing the R package
 You are free to use tidysig under the broadly-permissive MIT license. We ask 
