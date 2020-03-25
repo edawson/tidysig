@@ -43,8 +43,8 @@ per_sample_counts_summary <- function(x, label="Sigprofiler"){
 
 #' @export
 per_sample_summary <- function(x, label = "tidysig"){
-  y <- per_sample_count_summary(x, label)
-  z <- per_sample_proportion_summary(x, label)
+  y <- per_sample_counts_summary(x, label)
+  z <- per_sample_proportions_summary(x, label)
   ret <- left_join(y, z, by=c("Sample"))
   return(ret)
 }
