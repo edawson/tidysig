@@ -101,7 +101,7 @@ combine_context_change_cols <- function(x){
 }
 
 #' @export
-export_to_sigprof <- function(x){
+export_to_sigprofiler <- function(x){
   x <- x %>%
     pivot_wider(id_cols=c(Signature, Context, Change),
                 values_from=Amount,
@@ -109,4 +109,27 @@ export_to_sigprof <- function(x){
   x <- combine_context_change_cols(x)
   return (x)
 }
+
+#' @export
+convert_pcawg_to_sigprofiler_SBS96 <- function(x){
+  return(
+    combine_context_change_cols(x)
+  )
+}
+
+#' @export
+export_to_signatureanalyzer_word_SBS96 <- function(x){
+  x <- export_to_sigprofiler(x)
+  x <- x %>%
+    mutate(context96.word = paste(str_sub(MutationType,1,1),
+                                  str_sub(MutationType,3,3),
+                                  str_sub(MutationType,5,5),
+                                  str_sub(MutationType,7,7),sep=""))
+  x <- arrange_vars(x,c(context96.word=1))
+  x <- x %>% select(-MutationType)
+  return(x)
+}
+
+
+
 
