@@ -17,5 +17,5 @@ jobs:
       - name: Install rcmdcheck 1.3.3
         run: Rscript -e "install.packages('https://cran.r-project.org/src/contrib/rcmdcheck_1.3.3.tar.gz', repos = NULL, type = 'source')"
       - name: Run tests
-        run: Rscript testthat::test_dir("tests")
+        run: Rscript library(testthat); testthat::test_dir("tests")
      
