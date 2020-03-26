@@ -12,5 +12,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: r-lib/actions/setup-r@master
+    - name: Install dependencies
+        run: |
+            install.packages(c("remotes", "rcmdcheck", "tidyverse", "cowplot", "usethis", "devtools", "testthat"))
     - name: r-test
-      run: cd tests/ && Rscript testthat.R
+        run: cd tests/ && Rscript testthat.R
