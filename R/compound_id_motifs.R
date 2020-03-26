@@ -1,4 +1,5 @@
-
+#' @import magrittr
+#' @import dplyr
 compound_id_motifs <- function(x){
   x <- x %>%
     dplyr::mutate(CompoundMotif = paste(Type,Length,Motif, sep = ":")) %>%

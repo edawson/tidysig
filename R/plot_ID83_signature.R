@@ -1,5 +1,7 @@
 
 #' @export
+#' @import ggplot2
+#' @import cowplot
 plot_ID83_signature <- function(x,
                                label = "Signature",
                                title = "",
@@ -17,7 +19,7 @@ plot_ID83_signature <- function(x,
     geom_bar(aes(x = MotifLengthChar, y = Amount, fill = CompoundMotif), stat = "identity") + 
     facet_grid(cols = vars(CompoundMotif),
                rows = vars(Signature),
-               scale = "free",
+               scales = "free",
                shrink = TRUE) +
     theme_minimal_hgrid(12) +
     coord_cartesian(expand = FALSE) + 
