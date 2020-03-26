@@ -7,6 +7,15 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
+
+      - uses: actions/cache@v1
+        id: cache
+        with:
+            path: ~/.local/share/renv
+            key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+            restore-keys: |
+                ${{ runner.os }}-renv-
+
       - uses: r-lib/actions/setup-r@master
         with:
             r-version: '3.6.1'
@@ -17,6 +26,7 @@ jobs:
       - name: Install rcmdcheck 1.3.3
         run: Rscript -e "install.packages('https://cran.r-project.org/src/contrib/rcmdcheck_1.3.3.tar.gz', repos = NULL, type = 'source')"
       - name: Install devtools
+        if: steps.cache.outputs.cache-hit != 'true'
         run: Rscript -e "install.packages('devtools')"
       - name: R tests
         run: Rscript -e "require('devtools'); devtools::check()"
