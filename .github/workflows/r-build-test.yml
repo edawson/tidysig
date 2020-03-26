@@ -30,6 +30,6 @@ jobs:
         run: Rscript -e "install.packages('devtools')"
       - name: Install deps
         if: steps.cache.outputs.cache-hit != 'true'
-        run: Rscript -e "install.packages('dplyr','ggplot2','cowplot','readr','scales','reshape2','ggsci')"
+        run: Rscript -e "install.packages('dplyr','ggplot2','cowplot','readr','scales','reshape2','ggsci',  dep=TRUE, lib=NULL)"
       - name: R tests
         run: Rscript -e "require('devtools'); devtools::check()"
