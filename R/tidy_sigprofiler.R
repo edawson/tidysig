@@ -81,3 +81,32 @@ tidy_sigprof_activities <- function(x){
   return (x)
 }
 
+combine_context_change_cols <- function(x){
+  if ("Mutation type" %in% names(x)){
+    x <- x %>% rename(Change = `Mutation type`)
+  }
+  if ("Trinucleotide" %in% names(x)){
+    x <- x %>% rename(Context = Trinucleotide)
+  }
+  x <- x %>%
+    mutate(MutationType = paste(str_sub(Context,1,1),
+                                "[",
+                                Change,
+                                "]",
+                                str_sub(Context,3,3),
+                                sep=""))
+  x <- arrange_vars(x, c(MutationType=1)) 
+  x <- x %>% select(-Change, -Context)
+  return (x)
+}
+
+#' @export
+export_to_sigprof <- function(x){
+  x <- x %>%
+    pivot_wider(id_cols=c(Signature, Context, Change),
+                values_from=Amount,
+                names_from = Signature)
+  x <- combine_context_change_cols(x)
+  return (x)
+}
+
