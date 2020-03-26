@@ -101,7 +101,7 @@ combine_context_change_cols <- function(x){
 }
 
 #' @export
-export_to_sigprofiler <- function(x){
+export_to_sigprofiler_SBS96 <- function(x){
   x <- x %>%
     pivot_wider(id_cols=c(Signature, Context, Change),
                 values_from=Amount,
