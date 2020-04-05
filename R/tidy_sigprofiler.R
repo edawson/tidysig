@@ -2,11 +2,11 @@
 transpose_sigprofiler_df <- function(x){
   ttt <- combine_context_change_cols(x)
   if ("MutationsType" %in% names(ttt)){
-    ttt <- ttt %>% rename(MutationType=MutationsType)
+    ttt <- ttt %>% dplyr::rename(MutationType=MutationsType)
   }
-  ttt <- ttt %>% column_to_rownames("MutationType")
+  ttt <- ttt %>% tibble::column_to_rownames("MutationType")
   ttt_t <- as.data.frame(t(as.matrix(ttt)))
-  ttt_t <- ttt_t %>% rownames_to_column(var="Signature")
+  ttt_t <- ttt_t %>% tibble::rownames_to_column(var="Signature")
   ttt_t <- arrange_vars(ttt_t, c(Signature=1))
   return (ttt_t)
 }
@@ -30,8 +30,10 @@ transform_sigprofiler_df <- function(x){
   
   
   ## Probabilities files
-  if ("Sample Names" %in% names(x) & "MutationType" %in% names(x)){
-    message("Transforming sigprofiler activity file.")
+  if ("Sample Names" %in% names(x) &
+      "MutationType" %in% names(x) &
+      (x %>% distinct(MutationType) %>% count())$n == 96){
+    message("Transforming sigprofiler SBS96 probability file.")
 
     labelProbs = TRUE
     x <- x %>% rename(Sample=`Sample Names`)
@@ -43,13 +45,29 @@ transform_sigprofiler_df <- function(x){
       arrange(Sample, Signature, Change, Context)
     x <- arrange_vars(x, c(Sample=1,Signature=2,Change=3,Context=4,probability=5))
     return(x)
-  }
+  } else if ("Sample Names" %in% names(x) &
+             "MutationType" %in% names(x) &
+             (x %>% distinct(MutationType) %>% count())$n == 83){
+    message("Transforming sigprofiler ID83 probability file.")
+    x <- x %>% rename(Sample = `Sample Names`) %>%
+      pivot_longer(-c("Sample", "MutationType"), names_to = "variable", values_to = "value") %>%
+      separate(MutationType, c("Length", "Type", "Motif", "MotifLength")) %>%
+      mutate(Motif = case_when(
+        Motif == "R" ~ "Repeat",
+        Motif == "M" ~ "Microhomology",
+        TRUE ~ Motif
+      )) %>%
+      rename(Signature = variable, probability = value) %>%
+      arrange(Sample,Signature,Length,Type,Motif,MotifLength)
+    
+    x <- arrange_vars(x, c(Sample=1,Signature=2,Length=3,Type=4,Motif=5,MotifLength=6))
+    return(x)
+    }
   
   
   x <- combine_context_change_cols(x)
   
   feature_count <- (x %>% distinct(MutationType) %>% count())$n
-  cat(feature_count)
   
   x <- transpose_sigprofiler_df(x)
   
@@ -125,20 +143,20 @@ combine_context_change_cols <- function(x){
     return(x)
   }
   if ("Mutation type" %in% names(x)){
-    x <- x %>% rename(Change = `Mutation type`)
+    x <- x %>% dplyr::rename(Change = `Mutation type`)
   }
   if ("Trinucleotide" %in% names(x)){
-    x <- x %>% rename(Context = Trinucleotide)
+    x <- x %>% dplyr::rename(Context = Trinucleotide)
   }
   x <- x %>%
-    mutate(MutationType = paste(str_sub(Context,1,1),
+    dplyr::mutate(MutationType = paste(str_sub(Context,1,1),
                                 "[",
                                 Change,
                                 "]",
                                 str_sub(Context,3,3),
                                 sep=""))
   x <- arrange_vars(x, c(MutationType=1)) 
-  x <- x %>% select(-Change, -Context)
+  x <- x %>% dplyr::select(-Change, -Context)
   return (x)
 }
 
