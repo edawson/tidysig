@@ -25,7 +25,6 @@ Depends:
     scales,
     reshape2,
     magrittr,
-    ggsci,
     purrr,
     tibble,
     digest
