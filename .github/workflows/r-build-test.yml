@@ -5,6 +5,7 @@ name: R-CMD-check
 jobs:
   R-CMD-check:
     runs-on: ubuntu-18.04
+    container: rocker/verse
     steps:
       - uses: actions/checkout@v1
 
@@ -15,10 +16,10 @@ jobs:
             key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
             restore-keys: |
                 ${{ runner.os }}-renv-
+        - name: R test
+          run: make test
 
-      - uses: r-lib/actions/setup-r@master
-        with:
-            r-version: '3.6.1'
+
             #- name: Install libcurl
         #run: sudo apt-get install libcurl4-openssl-dev
         #- name: Install renv 0.9.2
