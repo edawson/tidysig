@@ -5,7 +5,7 @@ name: R-CMD-check
 jobs:
     R-CMD-check:
         runs-on: ubuntu-18.04
-        container: rocker/verse
+        container: erictdawson/cowplot
         steps:
             - uses: actions/checkout@v1
             - name: R test
