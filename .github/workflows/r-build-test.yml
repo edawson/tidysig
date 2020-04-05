@@ -9,15 +9,15 @@ jobs:
         steps:
             - uses: actions/checkout@v1
 
-        - uses: actions/cache@v1
-            id: cache
-            with:
-                path: ~/.local/share/renv
-                key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
-                restore-keys: |
-                    ${{ runner.os }}-renv-
-        - name: R test
-            run: make test
+            - uses: actions/cache@v1
+                id: cache
+                with:
+                    path: ~/.local/share/renv
+                    key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+                    restore-keys: |
+                        ${{ runner.os }}-renv-
+            - name: R test
+                run: make test
 
 
         #- name: Install libcurl
