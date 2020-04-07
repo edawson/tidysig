@@ -27,6 +27,7 @@ Depends:
     magrittr,
     purrr,
     tibble,
+    tidyr,
     digest
 RoxygenNote: 7.1.0
 Suggests: 
