@@ -1,4 +1,5 @@
-
+#'
+#' @import dplyr tibble
 transpose_sigprofiler_df <- function(x){
   ttt <- combine_context_change_cols(x)
   if ("MutationsType" %in% names(ttt)){
@@ -14,6 +15,7 @@ transpose_sigprofiler_df <- function(x){
 ## TODO: make this also handle probs / counts / proportions
 
 #' @export
+#' @import tidyr dplyr
 transform_sigprofiler_df <- function(x){
   
   labelProbs = FALSE
@@ -21,11 +23,11 @@ transform_sigprofiler_df <- function(x){
   ## Handles irregular variable names in PCAWG, COSMIC, and different versions
   ## of SigProfilerMatrixGenerator and SigProfilerExtractor
   if ("MutationsType" %in% names(x) ){
-    x <- x %>% rename(MutationType=MutationsType)
+    x <- x %>% dplyr::rename(MutationType=MutationsType)
   } else if ("MutationTypes" %in% names(x)){
-    x <- x %>% rename(MutationType=MutationTypes)
+    x <- x %>% dplyr::rename(MutationType=MutationTypes)
   } else if("Mutation type" %in% names(x) & ! "Trinucleotide" %in% names(x)){
-    x <- x %>% rename(MutationType=`Mutation type`)
+    x <- x %>% dplyr::rename(MutationType=`Mutation type`)
   }
   
   
@@ -37,7 +39,7 @@ transform_sigprofiler_df <- function(x){
 
     labelProbs = TRUE
     x <- x %>% rename(Sample=`Sample Names`)
-    x <- x %>% pivot_longer(-c(Sample, MutationType), names_to = "variable", values_to = "value") %>%
+    x <- x %>% tidyr::pivot_longer(-c(Sample, MutationType), names_to = "variable", values_to = "value") %>%
       mutate(Context = paste(str_sub(MutationType, 1, 1), str_sub(MutationType, 3, 3), str_sub(MutationType, 7, 7), sep =""),
              Change = str_sub(MutationType, 3, 5)) %>%
       rename(Signature = variable, probability = value) %>%
@@ -50,7 +52,7 @@ transform_sigprofiler_df <- function(x){
              (x %>% distinct(MutationType) %>% count())$n == 83){
     message("Transforming sigprofiler ID83 probability file.")
     x <- x %>% rename(Sample = `Sample Names`) %>%
-      pivot_longer(-c("Sample", "MutationType"), names_to = "variable", values_to = "value") %>%
+      tidyr::pivot_longer(-c("Sample", "MutationType"), names_to = "variable", values_to = "value") %>%
       separate(MutationType, c("Length", "Type", "Motif", "MotifLength")) %>%
       mutate(Motif = case_when(
         Motif == "R" ~ "Repeat",
@@ -72,7 +74,8 @@ transform_sigprofiler_df <- function(x){
   x <- transpose_sigprofiler_df(x)
   
   if (feature_count == 83){
-    x <- x %>% pivot_longer(-Signature,names_to = "variable",values_to = "value") %>%
+    message("Transforming SigProfiler ID83 signature / counts file.")
+    x <- x %>% tidyr::pivot_longer(-Signature,names_to = "variable",values_to = "value") %>%
       separate(variable, c("Length", "Type", "Motif", "MotifLength")) %>%
       mutate(Motif = case_when(
         Motif == "R" ~ "Repeat",
@@ -82,6 +85,7 @@ transform_sigprofiler_df <- function(x){
       rename(Amount = value)
   }
   else if (feature_count == 96){
+    message("Transforming SigProfiler SBS96 signature / counts file.")
     x <- x %>% 
       tidyr::pivot_longer(-Signature,names_to = "variable",values_to="value") %>%
       dplyr::mutate(Context = paste(stringr::str_sub(variable, 1, 1), stringr::str_sub(variable, 3, 3), stringr::str_sub(variable, 7, 7), sep =""),
@@ -91,7 +95,26 @@ transform_sigprofiler_df <- function(x){
       dplyr::select(Signature, Change, Context, Amount) %>%
       dplyr::arrange(Signature, Change, Context)
   }
+  else{
+    
+  }
   return(x)
+}
+
+#' @export
+tidy_sigprof_SBS96_df <- function(x){
+  warning("tidy_sigprof_SBS96_df and tidy_sigprof_ID83_df are deprecated. Please use the transform_sigprofiler_df function." )
+  return(
+    transform_sigprofiler_df(x)
+  )
+}
+
+#' @export
+tidy_sigprof_ID83_df <- function(x){
+  warning("tidy_sigprof_SBS96_df and tidy_sigprof_ID83_df are deprecated. Please use the transform_sigprofiler_df function." )
+  return(
+    transform_sigprofiler_df(x)
+  )
 }
 
 
@@ -163,7 +186,7 @@ combine_context_change_cols <- function(x){
 #' @export
 export_to_sigprofiler_SBS96 <- function(x){
   x <- x %>%
-    pivot_wider(id_cols=c(Signature, Context, Change),
+    tidyr::pivot_wider(id_cols=c(Signature, Context, Change),
                 values_from=Amount,
                 names_from = Signature)
   x <- combine_context_change_cols(x)

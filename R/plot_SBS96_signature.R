@@ -1,5 +1,19 @@
 
+plot_SBS96_contexts <- function(x,
+                                usePercent=FALSE,
+                                countsAsProportions=FALSE,
+                                xlabel="Base Context",
+                                ylabel="Count",
+                                title=NULL,
+                                labelVar="Sample"){
+  return(
+    plot_SBS96_signature()
+  )
+}
+
+
 #' @export
+#' @import ggplot2 cowplot scales
 plot_SBS96_signature <- function(x,
                                  label = "Signature",
                                  title = NULL,
@@ -7,11 +21,12 @@ plot_SBS96_signature <- function(x,
                                  ylabel = "Count",
                                  ylimits=NULL,
                                  usePercent=FALSE,
-                                 countsAsProportions=FALSE){
+                                 countsAsProportions=FALSE,
+                                 facetCondition=NULL){
   if (countsAsProportions){
     x <- normalize_counts(x)
   }
-  p <- ggplot(x) +
+  p <- ggplot2::ggplot(x) +
     geom_bar(aes(x = Context, y = Amount, fill = Change), stat = "identity") + 
     facet_grid(cols = vars(Change), rows = vars(Signature), scales = "free", shrink = TRUE) +
     theme_minimal_hgrid(12) +
