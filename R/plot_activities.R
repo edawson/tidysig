@@ -1,4 +1,13 @@
 
+#' Plot the activities of signature(s) as both counts and proportions
+#' @param x A TidySig tibble
+#' @param legendPosition One of ("top", "bottom", "right" or "left") for legend placement
+#' @param countYlim custom y-limits for the count plot
+#' @param propYlim custom y-limits for the proportions plot
+#' @import ggplot2
+#' @import cowplot
+#' 
+#' @return a ggplot2 object of two plots, one of counts and one of proportions
 #' @export
 signature_activity_figure <- function(x,
                             legendPosition = "bottom",
@@ -30,6 +39,24 @@ signature_activity_figure <- function(x,
   return(figure)
 }
 
+#' Plot the activities of signature(s)
+#' @param x A TidySig dataframe/tibble
+#' @param title A title for the plot
+#' @param xlabel An x-axis label
+#' @param ylabel A y-axis label
+#' @param usePercent Use percent scales (rather than counts)
+#' @param ylimits Use custom ylimits (useful for normalizing the views of multiple signatures)
+#' @param countsAsProportions Convert the input data (in counts) to per-signature proportions
+#' @param showSampleNames display sample names underneath the plot
+#' @param orderByMutationCount sort the data by descending number of mutations
+#' @param facetGroupVariable a variable to facet the data on (e.g., an exposure condition).
+#' @return a ggplot2 object
+#' @import ggplot2
+#' @import cowplot
+#' @importFrom magrittr "%>%"
+#' @import dplyr
+#' @import scales
+#' @importFrom stats reorder
 #' @export
 plot_signature_activities <- function(x,
                                 title = NULL,

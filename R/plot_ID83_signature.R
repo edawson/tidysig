@@ -1,4 +1,15 @@
 
+#' Plot an ID83 signature ro series of signatures
+#' @param x A TidySig dataframe/tibble
+#' @param label The right-side (i.e., facet) label.
+#' Usually "Signature" or "Sample" or a sample ID.
+#' @param title A title for the plot
+#' @param xlabel An x-axis label
+#' @param ylabel A y-axis label
+#' @param usePercent Use percent scales (rather than counts)
+#' @param ylimits Use custom ylimits (useful for normalizing the views of multiple signatures)
+#' @param countsAsProportions Convert the input data (in counts) to per-signature proportions
+#' @return a ggplot2 object
 #' @export
 #' @import ggplot2
 #' @import cowplot

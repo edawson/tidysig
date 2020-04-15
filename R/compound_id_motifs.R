@@ -1,4 +1,4 @@
-#' @import magrittr
+#' @importFrom magrittr "%>%"
 #' @import dplyr
 compound_id_motifs <- function(x){
   x <- x %>%
