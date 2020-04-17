@@ -1,5 +1,30 @@
 
+plot_SBS96_contexts <- function(x,
+                                usePercent=FALSE,
+                                countsAsProportions=FALSE,
+                                xlabel="Base Context",
+                                ylabel="Count",
+                                title=NULL,
+                                labelVar="Sample"){
+  return(
+    plot_SBS96_signature()
+  )
+}
+
+#' Plot an SBS96 signature or series of signatures
+#' @param x A TidySig dataframe/tibble
+#' @param label The right-side (i.e., facet) label.
+#' Usually "Signature" or "Sample" or a sample ID.
+#' @param title A title for the plot
+#' @param xlabel An x-axis label
+#' @param ylabel A y-axis label
+#' @param facetCondition a condition to generate facet columns.
+#' @param usePercent Use percent scales (rather than counts)
+#' @param ylimits Use custom ylimits (useful for normalizing the views of multiple signatures)
+#' @param countsAsProportions Convert the input data (in counts) to per-signature proportions
+#' @return a ggplot2 object
 #' @export
+#' @import ggplot2 cowplot scales
 plot_SBS96_signature <- function(x,
                                  label = "Signature",
                                  title = NULL,
@@ -7,11 +32,12 @@ plot_SBS96_signature <- function(x,
                                  ylabel = "Count",
                                  ylimits=NULL,
                                  usePercent=FALSE,
-                                 countsAsProportions=FALSE){
+                                 countsAsProportions=FALSE,
+                                 facetCondition=NULL){
   if (countsAsProportions){
     x <- normalize_counts(x)
   }
-  p <- ggplot(x) +
+  p <- ggplot2::ggplot(x) +
     geom_bar(aes(x = Context, y = Amount, fill = Change), stat = "identity") + 
     facet_grid(cols = vars(Change), rows = vars(Signature), scales = "free", shrink = TRUE) +
     theme_minimal_hgrid(12) +

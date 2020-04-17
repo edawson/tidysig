@@ -3,6 +3,9 @@ tidysig
 Eric T. Dawson  
 February 2020
 
+
+![R-CMD-check](https://github.com/edawson/tidysig/workflows/R-CMD-check/badge.svg)
+
 ## Introduction
 tidysig is an R package for plotting mutational signatures / mutational contexts in
 the tidyverse style. It produces ggplot2 plots of SBS96 and ID83 features which can then
