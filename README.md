@@ -7,9 +7,14 @@ February 2020
 ![R-CMD-check](https://github.com/edawson/tidysig/workflows/R-CMD-check/badge.svg)
 
 ## Introduction
-tidysig is an R package for plotting mutational signatures / mutational contexts in
-the tidyverse style. It produces ggplot2 plots of SBS96 and ID83 features which can then
-be modified with standard ggplot2 layers.
+tidysig is an R package for plotting mutational
+signatures / mutational contexts in
+the tidyverse style.
+It produces ggplot2 plots of SBS96
+and ID83 features which can then
+be modified with standard ggplot2 layers. It attempts to make
+plotting signatures simpler by requiring strict
+formatting and abstracting as much as possible.
 
 ## Installation
 
@@ -24,9 +29,7 @@ tidysig is currently compatible with SigProfilerExtractor (as of version 1.0.3),
 with plans to support SignatureAnalyzer.
 
 **Nota bene:** There is a known incompatibility with some SigProfilerExtractor outputs,
-which have a first column titled "MutationsType" instead of "MutationType."
-
-This can be remedied with the following dplyr::rename call after reading in the file:
+which have a first column titled "MutationsType" instead of "MutationType." This can be remedied with the following dplyr::rename call after reading in the file:
 ```
 sigprofiler_results <- read_tsv("sigprofiler_results/SBS96/Suggested_Solution/De_Novo_Solution/De_Novo_Solution_Signatures_SBS96.txt")
 
@@ -58,7 +61,7 @@ library(readr)
 
 sigprofiler_results <- read_tsv("sigprofiler_results/SBS96/Suggested_Solution/De_Novo_Solution/De_Novo_Solution_Signatures_SBS96.txt")
 
-df <- tidy_sigprof_SBS96_df(sigprofiler_results)
+df <- transform_sigprofiler_df(sigprofiler_results)
 
 all_sig_plot <- plot_SBS96_signature(df)
 ```
@@ -81,21 +84,24 @@ all_sig_plot_proportions_norm <- plot_sbs96_signature(df, countsAsProportions=TR
 ## To plot a specific signature, you can filter using standard dplyr commands.
 sig_96A_plot <- plot_SBS96_signature(df %>% dplyr::filter(Signature == "96A"))
 
+## Or, use the %in% operator for multiple signatures:
+sig_96A_96B_plot <- plot_SBS96_signature(df %>% dplyr::filter(Signature %in% c("96A", "96B")))
+
 ## Plots can be saved using cowplot/ggplot2's save_plot function.
-save_plot("all_sigs.pdf", all_sig_plot ,base_height = 10, base_width = 12)
+save_plot("all_sigs.pdf", all_sig_plot ,base_height = 6, base_asp=2)
 
 ## For single signatures, you can use the save_signature_plot function
 save_signature_plot(sig_96A_plot, "sig_96A_plot.pdf")
 ```
 
-You can layer on standard ggplot2 layers. Here's a silly example
+You can layer on standard ggplot2 layers. Here's an example
 where we remove sample names and change the theme to theme\_bw():
 ```R
-activ <- tidy_sigprof_sbs96_activities(
+activ <- transform_sigprofiler_df(
     read_tsv("sigprofiler_results/SBS96/Suggested_Solution/De_Novo_Solution/De_Novo_Solution_Activities_SBS96.txt")
 )
 
-plot_SBS96_activity(activ %>%
+plot_signature_activities(activ %>%
        group_by(Sample) %>%
        mutate(high = ifelse(sum(Amount) > 1000, "High", "Low")),
     countsAsProportions = F,
