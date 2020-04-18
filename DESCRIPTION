@@ -17,9 +17,10 @@ LazyData: true
 Depends:
     R (>= 3.5.0)
 Imports:
+    cowplot,
+    digest,
     dplyr,
     ggplot2,
-    cowplot,
     readr,
     stringr,
     lazyeval,
@@ -29,7 +30,7 @@ Imports:
     purrr,
     tibble,
     tidyr,
-    digest
+    hdf5r
 RoxygenNote: 7.1.0
 Suggests: 
     testthat (>= 2.1.0)
