@@ -15,7 +15,8 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends:
-    R (>= 3.5.0)
+    R (>= 3.5.0),
+    hdf5r
 Imports:
     cowplot,
     digest,
@@ -29,8 +30,7 @@ Imports:
     reshape2,
     purrr,
     tibble,
-    tidyr,
-    hdf5r
+    tidyr
 RoxygenNote: 7.1.0
 Suggests: 
     testthat (>= 2.1.0)
