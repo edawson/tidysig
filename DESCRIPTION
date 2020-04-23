@@ -1,6 +1,6 @@
 Package: tidysig
 Title: Plot mutational signatures using ggplot objects
-Version: 0.0.1.6
+Version: 0.0.1.7
 Authors@R: 
     person(given = "Eric",
            family = "Dawson",
@@ -17,9 +17,11 @@ LazyData: true
 Depends:
     R (>= 3.5.0)
 Imports:
+    cowplot,
+    digest,
     dplyr,
     ggplot2,
-    cowplot,
+    hdf5r,
     readr,
     stringr,
     lazyeval,
@@ -28,8 +30,7 @@ Imports:
     reshape2,
     purrr,
     tibble,
-    tidyr,
-    digest
+    tidyr
 RoxygenNote: 7.1.0
 Suggests: 
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),

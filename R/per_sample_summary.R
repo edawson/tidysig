@@ -22,7 +22,7 @@ per_sample_proportions_summary <- function(x, label="Sigprofiler"){
   x <- x %>% dplyr::mutate(Amount = Amount / nTotal)
   x <- x %>% dplyr::select(-nTotal)
   x <- x %>%
-    dplyr::spread(Signature, Amount)
+    tidyr::pivot_wider(names_from = Signature, values_from = Amount)
   mods <- x %>% dplyr::select(-Sample) %>% names()
   x <- x %>%
     dplyr::rename_at(mods, paste_prop_helper, label)
@@ -33,7 +33,7 @@ per_sample_proportions_summary <- function(x, label="Sigprofiler"){
 #' @param x A TidySig tibble
 #' @param label An optional label to append to the output column name(s)
 #' @return A tibble, with new columns (one per signature) listing per-sample counts of that signature.
-#' @import dplyr
+#' @import dplyr tidyr
 #' @importFrom magrittr "%>%"
 #' @export
 per_sample_counts_summary <- function(x, label="Sigprofiler"){
@@ -42,8 +42,10 @@ per_sample_counts_summary <- function(x, label="Sigprofiler"){
   tots <- x %>% dplyr::group_by(Sample) %>%
     dplyr::summarize({{totalVarName}} := sum(Amount)) %>% 
     dplyr::distinct()
+  # x <- x %>%
+  #   dplyr::spread(Signature, Amount)
   x <- x %>%
-    dplyr::spread(Signature, Amount)
+    tidyr::pivot_wider(names_from = Signature, values_from = Amount)
   mods <- x %>% dplyr::select(-Sample) %>% names()
 
 
@@ -59,7 +61,7 @@ per_sample_counts_summary <- function(x, label="Sigprofiler"){
 #' @param label An optional label to append to the output column name(s)
 #' @return A tibble, with new columns (two per signature) listing per-sample counts and
 #' proportions of that signature.
-#' @import dplyr
+#' @import dplyr tidyr
 #' @importFrom magrittr "%>%"
 #' @export
 per_sample_summary <- function(x, label = "tidysig"){
