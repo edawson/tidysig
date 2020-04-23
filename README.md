@@ -24,6 +24,22 @@ library(devtools)
 devtools::install_github("edawson/tidysig")
 ```
 
+If you want compatibility with SignatureAnalyzer, you'll need to install HDF5.
+If you've installed SignatureAnalyzer locally, this is already on your computer.
+Otherwise, you can install is for linux:
+```
+sudo apt-get install libhdf5-serial-dev
+```
+
+Or Mac OS X:
+```
+ brew install hdf5
+``` 
+
+The required R packages are listed in DESCRIPTION. Most are standard TidyVerse packages
+(plus cowplot). In addition, [hdf5r](https://cran.r-project.org/web/packages/hdf5r/index.html)
+is needed for SigantureAnalyzer files.
+
 ## Compatibility
 tidysig is currently compatible with SigProfilerExtractor (as of version 1.0.3),
 with plans to support SignatureAnalyzer.
