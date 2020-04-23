@@ -1,6 +1,6 @@
 Package: tidysig
 Title: Plot mutational signatures using ggplot objects
-Version: 0.0.1.7
+Version: 0.0.1.8
 Authors@R: 
     person(given = "Eric",
            family = "Dawson",
