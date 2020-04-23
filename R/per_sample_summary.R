@@ -42,8 +42,7 @@ per_sample_counts_summary <- function(x, label="Sigprofiler"){
   tots <- x %>% dplyr::group_by(Sample) %>%
     dplyr::summarize({{totalVarName}} := sum(Amount)) %>% 
     dplyr::distinct()
-  # x <- x %>%
-  #   dplyr::spread(Signature, Amount)
+
   x <- x %>%
     tidyr::pivot_wider(names_from = Signature, values_from = Amount)
   mods <- x %>% dplyr::select(-Sample) %>% names()
