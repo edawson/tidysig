@@ -7,7 +7,9 @@
 #' @param xlabel An x-axis label
 #' @param ylabel A y-axis label
 #' @param usePercent Use percent scales (rather than counts)
-#' @param ylimits Use custom ylimits (useful for normalizing the views of multiple signatures)
+#' @param ylimits Use custom ylimits (useful for normalizing the views of multiple signatures).
+#' Takes a numeric vector length-two OR a string "smart" to indicate that consistent y-limits should
+#' be automatically fit from the values in x.
 #' @param countsAsProportions Convert the input data (in counts) to per-signature proportions
 #' @return a ggplot2 object
 #' @export
@@ -24,6 +26,15 @@ plot_ID83_signature <- function(x,
   
   if (countsAsProportions){
     x <- normalize_counts(x)
+  }
+  if (!is.null(ylimits) && get_maximum_amount(x) > max(ylimits)){
+    warning("WARNING: ylimits less than maximum value [tidysig::plot_ID83_signature]. Plot will inaccurately depict signature(s).")
+  }
+  if (is.character(ylimits)){
+    # & ylimits == "smart"
+    stopifnot(ylimits == "smart")
+    use_ints <- get_maximum_amount(x) > 1
+    ylimits <- calculate_smart_ylimits(x, asInteger = use_ints)
   }
   x <- compound_id_motifs(x) 
   p <- ggplot(x) + 
@@ -45,13 +56,20 @@ plot_ID83_signature <- function(x,
           panel.spacing.y = unit(4, "mm"))
   
   if (usePercent & !is.null(ylimits)){
-    p <- p + scale_y_continuous(labels = scales::percent, limits = ylimits) + labs(y="Proportion")
+    p <- p +
+      coord_cartesian(expand=FALSE,ylim = ylimits) +
+    scale_y_continuous(labels = scales::percent) +
+      labs(y="Proportion")
   }
   else if(usePercent){
-    p <- p + scale_y_continuous(labels = scales::percent) + labs(y="Proportion")
+    p <- p +
+      scale_y_continuous(labels = scales::percent) +
+      labs(y="Proportion")
   }
   else if(!is.null(ylimits)){
-    p <- p + scale_y_continuous(breaks= pretty_breaks(),limits=ylimits)
+    p <- p +
+      coord_cartesian(expand=FALSE,ylim = ylimits) +
+      scale_y_continuous(breaks=pretty_breaks())
   }
   
   g <- ggplot_gtable(ggplot_build(p))
