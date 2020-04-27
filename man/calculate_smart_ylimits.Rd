@@ -4,12 +4,14 @@
 \alias{calculate_smart_ylimits}
 \title{Returns a set of ylimits trimmed to fit the input dataframe.}
 \usage{
-calculate_smart_ylimits(x, fitMinimum = FALSE)
+calculate_smart_ylimits(x, fitMinimum = FALSE, asInteger = FALSE)
 }
 \arguments{
 \item{x}{A TidySig tibble}
 
 \item{fitMinimum}{fit a minimum value instead of defaulting to zero.}
+
+\item{asInteger}{Return the results rounded to the nearest integer.}
 }
 \value{
 A vector of two elements containing calculated ylimits.

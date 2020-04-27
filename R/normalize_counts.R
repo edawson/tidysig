@@ -33,6 +33,7 @@ normalize_sample_counts <- function(x){
 #' Returns a set of ylimits trimmed to fit the input dataframe.
 #' @param x A TidySig tibble
 #' @param fitMinimum fit a minimum value instead of defaulting to zero.
+#' @param asInteger Return the results rounded to the nearest integer.
 #' @return A vector of two elements containing calculated ylimits.
 #' @export
 calculate_smart_ylimits <- function(x, fitMinimum=FALSE, asInteger=FALSE){

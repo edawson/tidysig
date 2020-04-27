@@ -6,7 +6,7 @@
 Used to calculate the min/max amounts
 for ylimits}
 \usage{
-add_val_buffer(val, buffer_pct = 0.01, ceilingBuf = TRUE, roundInteger = FALSE)
+add_val_buffer(val, buffer_pct = 0.01, ceilingBuf = TRUE, asInteger = FALSE)
 }
 \arguments{
 \item{val}{A numeric type.}
@@ -15,7 +15,7 @@ add_val_buffer(val, buffer_pct = 0.01, ceilingBuf = TRUE, roundInteger = FALSE)
 
 \item{ceilingBuf}{If true, add buffer_pct to val. Otherwise, subtract buffer_pct from val.}
 
-\item{roundInteger}{If true, return the nearest ceiling/floor integer to the buffered value.}
+\item{asInteger}{If true, return the nearest ceiling/floor integer to the buffered value.}
 }
 \value{
 A numeric value (v +- buffer_pct * val)
