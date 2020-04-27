@@ -33,14 +33,15 @@ normalize_sample_counts <- function(x){
 #' Returns a set of ylimits trimmed to fit the input dataframe.
 #' @param x A TidySig tibble
 #' @param fitMinimum fit a minimum value instead of defaulting to zero.
+#' @param asInteger Return the results rounded to the nearest integer.
 #' @return A vector of two elements containing calculated ylimits.
 #' @export
-calculate_smart_ylimits <- function(x, fitMinimum=FALSE){
+calculate_smart_ylimits <- function(x, fitMinimum=FALSE, asInteger=FALSE){
   min_y <- 0
   if (fitMinimum){
-    min_y <- add_val_buffer(get_minimum_amount(x), buffer_pct = 0.1, ceilingBuf = FALSE, roundInteger = FALSE)
+    min_y <- add_val_buffer(get_minimum_amount(x), buffer_pct = 0.1, ceilingBuf = FALSE, asInteger = asInteger)
   }
-  max_y <-add_val_buffer(get_minimum_amount(x), buffer_pct = 0.1, ceilingBuf = TRUE, roundInteger = FALSE)
+  max_y <-add_val_buffer(get_maximum_amount(x), buffer_pct = 0.1, ceilingBuf = TRUE, asInteger = asInteger)
 
   return (c(min_y, max_y))
 }
@@ -51,20 +52,20 @@ calculate_smart_ylimits <- function(x, fitMinimum=FALSE){
 #' @param val A numeric type.
 #' @param buffer_pct The proportion of val to add/subtract to/from val.
 #' @param ceilingBuf If true, add buffer_pct to val. Otherwise, subtract buffer_pct from val.
-#' @param roundInteger If true, return the nearest ceiling/floor integer to the buffered value.
+#' @param asInteger If true, return the nearest ceiling/floor integer to the buffered value.
 #' @return A numeric value (v +- buffer_pct * val)
-add_val_buffer <- function(val, buffer_pct=0.01, ceilingBuf=TRUE, roundInteger=FALSE){
+add_val_buffer <- function(val, buffer_pct=0.01, ceilingBuf=TRUE, asInteger=FALSE){
   stopifnot(buffer_pct < 1)
   ret <- NULL
   if (ceilingBuf){
     ret <- val + (val * buffer_pct)
-    if (roundInteger){
+    if (asInteger){
       ret <- ceiling(ret)
     }
   }
   else{
     ret <- max(0, val - (val * buffer_pct))
-    if (roundInteger){
+    if (asInteger){
       ret <- floor(ret)
     }
   }
