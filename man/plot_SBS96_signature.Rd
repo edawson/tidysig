@@ -28,7 +28,9 @@ Usually "Signature" or "Sample" or a sample ID.}
 
 \item{ylabel}{A y-axis label}
 
-\item{ylimits}{Use custom ylimits (useful for normalizing the views of multiple signatures)}
+\item{ylimits}{Use custom ylimits (useful for normalizing the views of multiple signatures).
+Takes a numeric vector length-two OR a string "smart" to indicate that consistent y-limits should
+be automatically fit from the values in x.}
 
 \item{usePercent}{Use percent scales (rather than counts)}
 
