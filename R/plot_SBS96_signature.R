@@ -1,4 +1,3 @@
-
 plot_SBS96_contexts <- function(x,
                                 usePercent=FALSE,
                                 countsAsProportions=FALSE,
@@ -68,7 +67,7 @@ plot_SBS96_signature <- function(x,
   
   if (usePercent & !is.null(ylimits)){
     p <- p +
-      coord_cartesian(expand=FALSE,ylim = ylimits)
+      coord_cartesian(expand=FALSE,ylim = ylimits) +
       scale_y_continuous(labels = scales::percent) +
       labs(y="Proportion")
 
@@ -80,7 +79,7 @@ plot_SBS96_signature <- function(x,
   }
   else if(!is.null(ylimits)){
     p <- p +
-      coord_cartesian(expand=FALSE,ylim = ylimits)
+      coord_cartesian(expand=FALSE,ylim = ylimits) +
       scale_y_continuous(breaks=pretty_breaks())
   }
   
