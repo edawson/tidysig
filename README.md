@@ -24,6 +24,13 @@ library(devtools)
 devtools::install_github("edawson/tidysig")
 ```
 
+To build from the GitHub source:
+```
+git clone --recursive https://github.com/edawson/tidysig
+cd tidysig
+Rscript scripts/devtools_install.R
+```
+
 If you want compatibility with SignatureAnalyzer, you'll need to install HDF5.
 If you've installed SignatureAnalyzer locally, this is already on your computer.
 Otherwise, you can install is for linux:
