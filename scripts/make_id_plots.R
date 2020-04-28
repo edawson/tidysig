@@ -32,7 +32,7 @@ act_decomp_fi <- read_tsv(act_decomp_fi)
 
 ## De novo signature plots
 dn_sigs <- tidysig::transform_sigprofiler_df(sig_dn_fi)
-dn_sigplot <- tidysig::plot_ID83_signature(dn_sigs)
+dn_sigplot <- tidysig::plot_signature(dn_sigs, ylimits="smart")
 save_plot(paste(outdir, "denovo_ID83_signature_plot.pdf", sep = "/"), dn_sigplot, base_asp = 2.6, base_height = 7)
 
 ## De novo activity plots
@@ -46,7 +46,7 @@ write_tsv(dn_summary, paste(outdir, "denovo_ID83_activity_summary.tsv", sep="/")
 
 ## Decomposition signature plots
 decomp_sigs <- tidysig::transform_sigprofiler_df(sig_decomp_fi)
-decomp_sigplot <- tidysig::plot_ID83_signature(decomp_sigs)
+decomp_sigplot <- tidysig::plot_signature(decomp_sigs, ylimits="smart")
 save_plot(paste(outdir, "decomposition_ID83_signature_plot.pdf", sep="/"),decomp_sigplot, base_asp=3, base_height=7)
 
 ## Decomposition activity plots
