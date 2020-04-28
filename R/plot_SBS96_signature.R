@@ -1,14 +1,4 @@
-plot_SBS96_contexts <- function(x,
-                                usePercent=FALSE,
-                                countsAsProportions=FALSE,
-                                xlabel="Base Context",
-                                ylabel="Count",
-                                title=NULL,
-                                labelVar="Sample"){
-  return(
-    plot_SBS96_signature()
-  )
-}
+
 
 #' Plot an SBS96 signature or series of signatures
 #' @param x A TidySig dataframe/tibble
@@ -35,6 +25,7 @@ plot_SBS96_signature <- function(x,
                                  usePercent=FALSE,
                                  countsAsProportions=FALSE,
                                  facetCondition=NULL){
+  warning("[tidysig::plot_SBS96_signature] is deprecated. Please use plot_signature(..., context=\"SBS96\")")
   if (countsAsProportions){
     x <- normalize_counts(x)
   }
