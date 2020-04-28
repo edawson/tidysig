@@ -43,8 +43,8 @@ transform_sigprofiler_df <- function(x){
   
   
   ## Probabilities files
-  if ("Sample Names" %in% names(x) &
-      "MutationType" %in% names(x) &
+  if ("Sample Names" %in% names(x) &&
+      "MutationType" %in% names(x) &&
       (x %>% dplyr::distinct(MutationType) %>% count())$n == 96){
     message("Transforming sigprofiler SBS96 probability file.")
 
@@ -58,8 +58,8 @@ transform_sigprofiler_df <- function(x){
       arrange(Sample, Signature, Change, Context)
     x <- arrange_vars(x, c(Sample=1,Signature=2,Change=3,Context=4,probability=5))
     return(x)
-  } else if ("Sample Names" %in% names(x) &
-             "MutationType" %in% names(x) &
+  } else if ("Sample Names" %in% names(x) &&
+             "MutationType" %in% names(x) &&
              (x %>% distinct(MutationType) %>% count())$n == 83){
     message("Transforming sigprofiler ID83 probability file.")
     x <- x %>% rename(Sample = `Sample Names`) %>%
