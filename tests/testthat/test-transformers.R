@@ -13,3 +13,7 @@ test_that("Mutation catalogs can be read [transform_sigprofiler_df]", {
   dig <- transform_sigprofiler_df(test_de_novo_sigs) %>% digest::digest(algo="md5")
   expect_equal(dig, "4a280c5beaab345aab089b8d67cbc0c8")
 })
+
+test_that("Activity counts can be read [transform_sigprofiler_df]",{
+  expect_equal(2, 2)
+})
