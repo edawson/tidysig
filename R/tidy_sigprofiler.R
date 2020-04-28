@@ -75,7 +75,10 @@ transform_sigprofiler_df <- function(x){
     
     x <- arrange_vars(x, c(Sample=1,Signature=2,Length=3,Type=4,Motif=5,MotifLength=6))
     return(x)
-    }
+  } else if ("Samples" %in% names(x)){
+    message("Transforming SigProfiler activities file")
+    return (tidy_sigprof_activities(x))
+  }
   
   
   x <- combine_context_change_cols(x)
@@ -187,7 +190,7 @@ tidy_sigprof_id83_probabilities <- function(x){
 tidy_sigprof_activities <- function(x){
   x <- x %>%
     rename(Sample = Samples) %>%
-    melt(id.vars = c("Sample")) %>%
+    pivot_longer(-Sample, names_to = "variable", values_to = "value") %>%
     rename(Signature = variable, Amount = value)
   return (x)
 }
