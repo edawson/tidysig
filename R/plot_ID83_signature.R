@@ -23,6 +23,7 @@ plot_ID83_signature <- function(x,
                                usePercent=TRUE,
                                ylimits=NULL,
                                countsAsProportions=FALSE){
+  warning("[tidysig::plot_ID83_signature] is deprecated. Please use plot_signature(..., context=\"ID83\")")
   
   if (countsAsProportions){
     x <- normalize_counts(x)

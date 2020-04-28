@@ -1,3 +1,4 @@
+.DS_Store
 .Rproj.user
 .Rhistory
 .RData
@@ -5,3 +6,6 @@
 *.tsv
 *.csv
 *.proj
+*.pdf
+*.hdf5
+*.h5
