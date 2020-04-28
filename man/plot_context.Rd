@@ -12,7 +12,7 @@ plot_context(
   title = "",
   xlabel = "Motif Length or Count",
   ylabel = "Count",
-  usePercent = TRUE,
+  usePercent = FALSE,
   ylimits = NULL,
   countsAsProportions = FALSE,
   separatePlots = FALSE,
