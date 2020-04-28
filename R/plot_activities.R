@@ -13,8 +13,8 @@ signature_activity_figure <- function(x,
                             legendPosition = "bottom",
                             countYlim = NULL,
                             propYlim = NULL){
-  countPlot <- plot_signature_activities(x) + theme(legend.position = legendPosition)
-  propPlot <- plot_signature_activities(x, countsAsProportions = TRUE)
+  countPlot <- plot_activities(x) + theme(legend.position = legendPosition)
+  propPlot <- plot_activities(x, countsAsProportions = TRUE)
   legend <- cowplot::get_legend(countPlot)
   countPlot <- countPlot + theme(legend.position = "none")
   propPlot <- propPlot + theme(legend.position = "none")
@@ -58,7 +58,7 @@ signature_activity_figure <- function(x,
 #' @import scales
 #' @importFrom stats reorder
 #' @export
-plot_signature_activities <- function(x,
+plot_activities <- function(x,
                                 title = NULL,
                                 xlabel = "Samples",
                                 ylabel = "Mutation Counts",
